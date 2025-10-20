@@ -1,0 +1,56 @@
+---
+include:
+  - project: 'klausklausen/templates'
+    ref: main
+    file: 'test.yml'
+  - project: 'klausklausen/templates'
+    ref: main
+    file: 'deploy.yml'
+  - project: 'klausklausen/templates'
+    ref: main
+    file: 'build.yml'
+  - project: 'klausklausen/templates'
+    ref: main
+    file: 'package.yml'
+  - project: 'klausklausen/templates'
+    ref: main
+    file: 'security.yml'
+  - project: 'klausklausen/templates'
+    ref: main
+    file: 'lint.yml'
+
+stages:
+  - security
+  - lint
+  - test
+  - build
+  - package
+  - deploy
+
+
+variables:
+  CI: "true"
+  TAG: $CI_COMMIT_BRANCH
+
+# security
+secret_scan:
+  extends: .secret_scan
+package_scan:
+  extends: .package_scan
+
+# lint
+markdown lint:
+  extends: .markdown_lint
+yaml lint:
+  extends: .yaml_lint
+prettier:
+  extends: .prettier
+
+# build
+build:
+  extends: .build_amd64_only
+  variables:
+    IMAGE_NAME: ${NEXUS_REPO_HOST}/${CI_PROJECT_NAME}/smtp-telegram-gateway
+    IMAGE_TAG: ${CI_COMMIT_SHORT_SHA}
+    BUILD_TARGET: runtime
+    CONTEXT: ${CI_PROJECT_DIR}/
