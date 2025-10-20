@@ -19,4 +19,4 @@ RUN mkdir -p /etc/smtptelegramgateway/ && \
     mv /usr/local/bin/SmtpTelegramGateway/appsettings.yaml /etc/smtptelegramgateway/appsettings.yaml && \
     ln -s /etc/smtptelegramgateway/appsettings.yaml /usr/local/bin/SmtpTelegramGateway/appsettings.yaml
 VOLUME [ "/etc/smtptelegramgateway/" ]
-ENTRYPOINT [ "/usr/local/bin/SmtpTelegramGateway/SmtpTelegramGateway" ]
+ENTRYPOINT [ "sh", "-c", "cp /etc/smtptelegramgateway/appsettings.yaml /usr/local/bin/SmtpTelegramGateway/appsettings.yaml && /usr/local/bin/SmtpTelegramGateway/SmtpTelegramGateway" ]
