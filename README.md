@@ -53,6 +53,32 @@ services:
       - ./config:/etc/smtptelegramgateway:ro
 ```
 
+Example config:
+
+```yaml
+# The port that the gateway will listen on to receive SMTP e-mail messages, the default is 25. 
+# No authorization is required when connecting to this port, select Basic Authorizathion if it is required
+SmtpPort: 25
+# Your token for the Telegram bot, get it at https://t.me/BotFather when registering the bot
+TelegramBotToken: SPECIFY THERE TELEGRAM BOT TOKEN
+# Define here a list of email addresses and telegram chats that will receive emails sent to these addresses.
+# Use an asterisk "*" instead of an email address to send all emails to some telegram chat
+# If you specify a Telegram user chat, the user must be subscribed to the bot
+# If you specify a Telegram group chat, you may need to add a minus sign prior to the group id, the bot must be added to the group
+# If you specify a Telegram channel chat, you may need to add -100 prior to the channel id, the bot must be added to the channel admins and given the right "Post in the channel"
+# For public channel chat, you can specify the channel public @username instead of the channel id
+Routing:
+-   Email: "*"
+    TelegramChat: SPECIFY THERE TELEGRAM USERID, GROUPID, CHANNELID OR @USERNAME
+-   Email: example@test.com
+    TelegramChat: SPECIFY THERE TELEGRAM USERID, GROUPID, CHANNELID OR @USERNAME
+# Logging Level. Set to Debug to see the details of the communication between your mail program and the gateway.
+# Set to Error to see less information
+Logging:
+  LogLevel:
+    Default: Debug
+```
+
 Environment variables and options should match the upstream project's configuration.
 
 🔗 Upstream Project
