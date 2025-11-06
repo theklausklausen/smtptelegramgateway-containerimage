@@ -15,12 +15,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libicu76 \
     ca-certificates \
     libssl3 && \
-    update-ca-certificates && \
-    mkdir -p /usr/local/bin/SmtpTelegramGateway/
-COPY --from=builder /linux-x64/* /usr/local/bin/SmtpTelegramGateway/
-RUN mkdir -p /etc/smtptelegramgateway/ && \
-    mv /usr/local/bin/SmtpTelegramGateway/appsettings.yaml /etc/smtptelegramgateway/appsettings.yaml && \
-    ln -s /etc/smtptelegramgateway/appsettings.yaml /usr/local/bin/SmtpTelegramGateway/appsettings.yaml
-VOLUME [ "/etc/smtptelegramgateway/" ]
-# ENTRYPOINT [ "sh", "-c", "cp /etc/smtptelegramgateway/appsettings.yaml /usr/local/bin/SmtpTelegramGateway/appsettings.yaml && /usr/local/bin/SmtpTelegramGateway/SmtpTelegramGateway" ]
-ENTRYPOINT [ "/usr/local/bin/SmtpTelegramGateway/SmtpTelegramGateway" ]
+    update-ca-certificates
+COPY --from=builder /linux-x64/SmtpTelegramGateway /usr/local/bin/
+ENTRYPOINT [ "/usr/local/bin/SmtpTelegramGateway" ]

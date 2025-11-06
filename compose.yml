@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  smtptelegramgateway:
+    build: .
+    container_name: smtptelegramgateway
+    ports:
+      - "2525:25"
+    env_file:
+      - .env
+    environment:
+      - TZ=Europe/Berlin
+    restart: unless-stopped
