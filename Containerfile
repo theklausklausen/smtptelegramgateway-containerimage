@@ -1,4 +1,4 @@
-FROM debian:13.1-slim AS builder
+FROM debian:13.2-slim AS builder
 RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     curl \
@@ -10,7 +10,7 @@ RUN export LATEST=$(curl -s https://api.github.com/repos/7orlum/SmtpTelegramGate
     unzip SmtpTelegramGateway.${LATEST}.linux-x64.zip && \
     chmod +x linux-x64/SmtpTelegramGateway
 
-FROM debian:13.1-slim AS runtime
+FROM debian:13.2-slim AS runtime
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libicu76 \
     ca-certificates \
