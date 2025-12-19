@@ -18,3 +18,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     update-ca-certificates
 COPY --from=builder /linux-x64/SmtpTelegramGateway /usr/local/bin/
 ENTRYPOINT [ "/usr/local/bin/SmtpTelegramGateway" ]
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+    CMD bash -c 'exec 3<>/dev/tcp/localhost/2525 && echo -e "EHLO hc\r\nQUIT\r\n" >&3'
